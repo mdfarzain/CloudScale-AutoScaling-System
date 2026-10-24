@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Sliders, Shield, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Sliders, Shield, CheckCircle2 } from 'lucide-react';
 
 export default function ScalingConfigPanel({ config, onUpdateConfig }) {
-  const [minReplicas, setMinReplicas] = useState(config?.min_replicas || 1);
-  const [maxReplicas, setMaxReplicas] = useState(config?.max_replicas || 4);
-  const [scaleOutThreshold, setScaleOutThreshold] = useState(config?.scale_out_threshold || 60);
-  const [scaleInThreshold, setScaleInThreshold] = useState(config?.scale_in_threshold || 25);
-  const [cooldownSeconds, setCooldownSeconds] = useState(config?.cooldown_seconds || 15);
+  const [minReplicas, setMinReplicas] = useState(config?.min_replicas ?? 1);
+  const [maxReplicas, setMaxReplicas] = useState(config?.max_replicas ?? 4);
+  const [scaleOutThreshold, setScaleOutThreshold] = useState(config?.scale_out_threshold ?? 60);
+  const [scaleInThreshold, setScaleInThreshold] = useState(config?.scale_in_threshold ?? 25);
+  const [cooldownSeconds, setCooldownSeconds] = useState(config?.cooldown_seconds ?? 15);
   const [savedMessage, setSavedMessage] = useState(false);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (config) {
-      setMinReplicas(config.min_replicas ?? 1);
-      setMaxReplicas(config.max_replicas ?? 4);
-      setScaleOutThreshold(config.scale_out_threshold ?? 60);
-      setScaleInThreshold(config.scale_in_threshold ?? 25);
-      setCooldownSeconds(config.cooldown_seconds ?? 15);
+      if (config.min_replicas !== undefined) setMinReplicas(config.min_replicas);
+      if (config.max_replicas !== undefined) setMaxReplicas(config.max_replicas);
+      if (config.scale_out_threshold !== undefined) setScaleOutThreshold(config.scale_out_threshold);
+      if (config.scale_in_threshold !== undefined) setScaleInThreshold(config.scale_in_threshold);
+      if (config.cooldown_seconds !== undefined) setCooldownSeconds(config.cooldown_seconds);
     }
   }, [config]);
 
@@ -39,20 +39,20 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
   };
 
   return (
-    <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-6 border border-slate-800 shadow-xl my-6">
+    <div className="bg-white dark:bg-slate-900/80 backdrop-blur-md rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl my-6 transition-colors duration-200">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Sliders className="w-5 h-5 text-blue-400" />
+          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Sliders className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             Horizontal Pod Autoscaler (HPA) Policy Configuration
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Tune elasticity limits, trigger thresholds, and oscillation stabilization cooldown.
           </p>
         </div>
 
         {savedMessage && (
-          <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs flex items-center gap-1.5 animate-fadeIn">
+          <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs flex items-center gap-1.5 animate-fadeIn">
             <CheckCircle2 className="w-3.5 h-3.5" />
             Policy Updated Successfully
           </span>
@@ -62,8 +62,8 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
           {/* Min Replicas */}
-          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Min Replicas</label>
+          <div className="bg-slate-50 dark:bg-slate-950/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label htmlFor="min-replicas-input" className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Min Replicas</label>
             <input
               id="min-replicas-input"
               type="number"
@@ -71,14 +71,14 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
               max="5"
               value={minReplicas}
               onChange={(e) => setMinReplicas(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono text-sm focus:border-blue-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-slate-900 dark:text-white font-mono text-sm focus:border-blue-500 focus:outline-hidden"
             />
-            <span className="text-[10px] text-slate-500 mt-1 block">Baseline capacity pool</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">Baseline capacity pool</span>
           </div>
 
           {/* Max Replicas */}
-          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Max Replicas</label>
+          <div className="bg-slate-50 dark:bg-slate-950/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label htmlFor="max-replicas-input" className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Max Replicas</label>
             <input
               id="max-replicas-input"
               type="number"
@@ -86,14 +86,14 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
               max="10"
               value={maxReplicas}
               onChange={(e) => setMaxReplicas(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-white font-mono text-sm focus:border-blue-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-slate-900 dark:text-white font-mono text-sm focus:border-blue-500 focus:outline-hidden"
             />
-            <span className="text-[10px] text-slate-500 mt-1 block">Maximum ceiling</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">Maximum ceiling</span>
           </div>
 
           {/* Scale Out Threshold */}
-          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Scale-Out CPU %</label>
+          <div className="bg-slate-50 dark:bg-slate-950/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label htmlFor="scale-out-threshold-input" className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Scale-Out CPU %</label>
             <input
               id="scale-out-threshold-input"
               type="number"
@@ -101,14 +101,14 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
               max="95"
               value={scaleOutThreshold}
               onChange={(e) => setScaleOutThreshold(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-rose-400 font-mono text-sm focus:border-rose-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-rose-600 dark:text-rose-400 font-mono text-sm focus:border-rose-500 focus:outline-hidden"
             />
-            <span className="text-[10px] text-slate-500 mt-1 block">&gt;= {scaleOutThreshold}% triggers scale-out</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">&gt;= {scaleOutThreshold}% triggers scale-out</span>
           </div>
 
           {/* Scale In Threshold */}
-          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Scale-In CPU %</label>
+          <div className="bg-slate-50 dark:bg-slate-950/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label htmlFor="scale-in-threshold-input" className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Scale-In CPU %</label>
             <input
               id="scale-in-threshold-input"
               type="number"
@@ -116,14 +116,14 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
               max="45"
               value={scaleInThreshold}
               onChange={(e) => setScaleInThreshold(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-emerald-400 font-mono text-sm focus:border-emerald-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-emerald-600 dark:text-emerald-400 font-mono text-sm focus:border-emerald-500 focus:outline-hidden"
             />
-            <span className="text-[10px] text-slate-500 mt-1 block">&lt;= {scaleInThreshold}% triggers scale-in</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">&lt;= {scaleInThreshold}% triggers scale-in</span>
           </div>
 
           {/* Cooldown Period */}
-          <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Cooldown (Seconds)</label>
+          <div className="bg-slate-50 dark:bg-slate-950/60 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <label htmlFor="cooldown-seconds-input" className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Cooldown (Seconds)</label>
             <input
               id="cooldown-seconds-input"
               type="number"
@@ -131,9 +131,9 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
               max="120"
               value={cooldownSeconds}
               onChange={(e) => setCooldownSeconds(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-amber-400 font-mono text-sm focus:border-amber-500 focus:outline-none"
+              className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-1.5 text-amber-600 dark:text-amber-400 font-mono text-sm focus:border-amber-500 focus:outline-hidden"
             />
-            <span className="text-[10px] text-slate-500 mt-1 block">Anti-flapping stabilization</span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 block">Anti-flapping stabilization</span>
           </div>
         </div>
 
@@ -142,7 +142,7 @@ export default function ScalingConfigPanel({ config, onUpdateConfig }) {
             id="apply-scaling-policy-btn"
             type="submit"
             disabled={saving}
-            className="px-5 py-2 text-xs font-bold rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-5 py-2 text-xs font-bold rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-md shadow-blue-600/25 transition-all flex items-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             <Shield className="w-4 h-4" />
             Apply Scaling Policy

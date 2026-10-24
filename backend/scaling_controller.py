@@ -14,7 +14,7 @@ class ScalingController:
         self.max_replicas = 4
         self.scale_out_threshold = 60.0  # Percentage
         self.scale_in_threshold = 25.0   # Percentage
-        self.cooldown_seconds = 15       # Fast enough for live college demo
+        self.cooldown_seconds = 15       # Fast stabilization period for responsive live demo
         
         # Operational State
         self.current_replicas = self.min_replicas

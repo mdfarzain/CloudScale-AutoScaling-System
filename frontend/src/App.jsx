@@ -1,17 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
-  Activity, 
   Cpu, 
   Layers, 
   Zap, 
   Clock, 
-  CheckCircle2, 
   AlertTriangle, 
-  Flame, 
-  Sliders, 
-  History, 
-  FileCode,
-  TrendingUp,
   Server
 } from 'lucide-react';
 
@@ -164,7 +157,7 @@ export default function App() {
   const cpuColor = cpuVal >= 60 ? 'rose' : cpuVal >= 40 ? 'amber' : 'cyan';
 
   return (
-    <div className="flex min-h-screen bg-[#080b12] text-slate-100 antialiased font-sans">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-[#080b12] text-slate-900 dark:text-slate-100 antialiased font-sans transition-colors duration-200">
       {/* Sidebar Navigation */}
       <Sidebar 
         activeTab={activeTab} 
@@ -184,14 +177,14 @@ export default function App() {
         <main className="p-6 max-w-7xl w-full mx-auto space-y-6">
           {/* Connection Error Banner */}
           {!backendOnline && (
-            <div className="bg-rose-500/10 border border-rose-500/30 rounded-xl p-4 text-xs flex items-center justify-between text-rose-300">
+            <div className="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 rounded-xl p-4 text-xs flex items-center justify-between text-rose-700 dark:text-rose-300 shadow-xs">
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-rose-400" />
+                <AlertTriangle className="w-5 h-5 text-rose-500 dark:text-rose-400 shrink-0" />
                 <span>Backend API unreachable at <code>http://127.0.0.1:5000</code>. Verify that the Flask server is running.</span>
               </div>
               <button 
                 onClick={fetchTelemetry}
-                className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white rounded-lg font-bold"
+                className="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white rounded-lg font-bold cursor-pointer"
               >
                 Retry
               </button>
@@ -293,12 +286,12 @@ export default function App() {
                 instances={instances} 
                 clusterCpu={metrics.cpu_utilization} 
               />
-              <div className="bg-slate-900/80 rounded-xl p-5 border border-slate-800 text-xs">
-                <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                  <Server className="w-4 h-4 text-cyan-400" />
+              <div className="bg-white dark:bg-slate-900/80 rounded-xl p-5 border border-slate-200 dark:border-slate-800 text-xs shadow-xs transition-colors duration-200">
+                <h3 className="font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                  <Server className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                   Load Balancing &amp; Traffic Distribution Mechanics
                 </h3>
-                <p className="text-slate-300 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   Incoming client traffic is balanced in round-robin fashion across all healthy active replica instances. When Horizontal Auto-Scaling detects high cluster load (&gt;{scalingConfig.scale_out_threshold}%), a new replica is booted into the pool, increasing cluster compute bandwidth and naturally relieving per-pod CPU utilization.
                 </p>
               </div>

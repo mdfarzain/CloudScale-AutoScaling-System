@@ -5,7 +5,7 @@ $BaseUrl = "http://127.0.0.1:5000"
 
 Write-Host "=================================================================" -ForegroundColor Cyan
 Write-Host "   CloudScale -- Auto-Scaling Live Demonstration Script" -ForegroundColor Yellow
-Write-Host "   College Evaluation and Faculty Demo Workflow" -ForegroundColor Cyan
+Write-Host "   Automated Scaling and Verification Workflow" -ForegroundColor Cyan
 Write-Host "=================================================================" -ForegroundColor Cyan
 
 # Step 1: Health and Initial State

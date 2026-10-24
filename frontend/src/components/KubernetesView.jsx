@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileCode, Copy, Check, Terminal, Layers, Cpu, ShieldCheck } from 'lucide-react';
+import { FileCode, Copy, Check, Terminal, Layers } from 'lucide-react';
 
 export default function KubernetesView() {
   const [activeTab, setActiveTab] = useState('hpa');
@@ -123,28 +123,28 @@ spec:
   };
 
   return (
-    <div className="bg-slate-900/80 backdrop-blur-md rounded-xl p-6 border border-slate-800 shadow-xl my-6">
+    <div className="bg-white dark:bg-slate-900/80 backdrop-blur-md rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl my-6 transition-colors duration-200">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Layers className="w-5 h-5 text-cyan-400" />
+          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <Layers className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
             Cloud Orchestration &amp; Kubernetes Architecture
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Real production manifests configured for Minikube, EKS, or GKE deployments.
           </p>
         </div>
 
         {/* Tab switcher */}
-        <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-lg border border-slate-800">
+        <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-950 p-1 rounded-lg border border-slate-200 dark:border-slate-800">
           {Object.keys(manifests).map((key) => (
             <button
               key={key}
               onClick={() => setActiveTab(key)}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all uppercase font-mono ${
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all uppercase font-mono cursor-pointer ${
                 activeTab === key
-                  ? 'bg-blue-600 text-white shadow'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               {key}
@@ -161,7 +161,7 @@ spec:
           </div>
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-2.5 py-1 text-xs rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-all font-mono"
+            className="flex items-center gap-1.5 px-2.5 py-1 text-xs rounded bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-all font-mono cursor-pointer"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
             {copied ? 'Copied!' : 'Copy YAML'}
@@ -174,7 +174,7 @@ spec:
       </div>
 
       {/* Commands Box */}
-      <div className="bg-slate-950/60 rounded-xl p-4 border border-slate-800">
+      <div className="bg-slate-950 rounded-xl p-4 border border-slate-800">
         <h4 className="text-xs font-bold text-white flex items-center gap-1.5 mb-2 font-mono">
           <Terminal className="w-4 h-4 text-amber-400" />
           Minikube / Kubernetes Deployment Commands

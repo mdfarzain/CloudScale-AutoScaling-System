@@ -93,9 +93,9 @@ npm run dev -- --host 127.0.0.1
 
 ---
 
-## 4. Demonstrating the 9-Step Evaluation Scenario
+## 4. End-to-End Evaluation & Verification Scenario
 
-To demonstrate the full lifecycle to college faculty, follow these steps:
+To observe and verify the complete auto-scaling lifecycle, follow these steps:
 
 ### Option A: Automated Demo via PowerShell Script
 Run the automated demonstration script:
